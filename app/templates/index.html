@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% block styles%}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}" type="text/css">
+{% endblock styles%}
+
+<!-- Content block -->
+{% block content %}
+<div class="container text-center">
+    <img src="{{url_for('static', filename='images/pitch1.jpeg')}}" />
+    <div class="text-content">
+        <h1>Your pitch needs to speak to your dream buyers, but it also needs to speak to you.</h1>
+        <h5> ~Megan Taylor~ </h5>
+    </div>
+</div>
+
+{% endblock %}

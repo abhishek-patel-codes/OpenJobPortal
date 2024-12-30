@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/categories.css')}}" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div>
+  
+</div>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    {% if pitches %}
+    {% for pitch in pitches %}
+    <div class="jumbotron">
+      <div class="card" id="white">
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <h4 class="card-title" style="color: white;">{{pitch.title}}</h4>
+            <p>{{pitch.pitch_content}}</p>
+            <footer class="blockquote-footer">- {{pitch.pitcher.username}}</footer>
+            <small style="float: right;" style="cursor: pointer !important"><a href="/comment/{{pitch.id}}">Comment</a></small>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted" id="details">
+          <small>Submitted on {{pitch.posted.strftime('%Y-%m-%d')}}</small><br>
+          <a href="{{url_for('main.upvote', uname = current_user.id ,pitch_id = pitch.id)}}"><button
+              class="btn my-2 my-sm-0">{{pitch.upvotes}}&nbsp;<i
+                class="fas fa-thumbs-up"></i>&nbsp;upvote</button></a>&nbsp;&nbsp;
+          <a href="{{url_for('main.downvote', uname = current_user.id ,pitch_id = pitch.id)}}"><button
+              class="btn my-2 my-sm-0">{{pitch.downvotes}}&nbsp;<i
+                class="fas fa-thumbs-up"></i>&nbsp;downvote</button></a>&nbsp;&nbsp;
+        </div>
+      </div>
+      {% for comment in comments %}
+      {%if comment.pitch_id == pitch.id %}
+      <div class="card comments">
+        <div class="card-body">
+          <p class="card-text">{{comment.comment_content}}</p>
+          <small class="commenter" style="float: right;">By: {{comment.author.username}}</small>
+          <br>
+          <hr style="width: 70%;">
+        </div>
+      </div>
+      {% endif %}
+      {% endfor%}
+    </div>
+    {% endfor%}
+    
+    {%endif%}
+  </div>
+  <div class="col-md-2"></div>
+</div>
+{% endblock %}

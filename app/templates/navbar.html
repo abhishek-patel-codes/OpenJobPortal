@@ -1,0 +1,50 @@
+<div class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+      <div class="navbar-header">
+          <div class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
+              style="border-color: transparent;">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </div>
+          <a class="navbar-brand" id="pitch" href="/">PitchDom</a>
+          <div class="navbar-right">
+
+              {% if current_user.is_authenticated %}
+              <a class="navbar-brand" style="font-size: 14px; font-family: sans-serif;
+              float: right !important" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
+              <a class="navbar-brand" style="font-size: 14px; font-family: sans-serif;
+              float: right !important"  href="{{url_for('main.new_pitch', uname=current_user.username)}}"> Create Pitch</a>
+              <a class=" btn my-2 my-sm-0" href="{{url_for('auth.logout')}}" style="margin: 10px; font-family: sans-serif;">Logout</a>
+              {% else %}
+              <a class="navbar-brand"></a>
+              <a class="btn my-2 my-sm-0" style="font-size: 14px; font-family: sans-serif; margin: 10px; float: right !important;"
+                  href="{{url_for('auth.login')}}">Login</a>
+              <a class=" btn my-2 my-sm-0" style="font-family: sans-serif;" href="{{url_for('auth.register')}}">Register</a>
+              {% endif %}
+          </div>
+          <div class="navbar-collapse collapse" style="float: right; font-family: sans-serif;">
+              <ul class="nav navbar-nav">
+                  <li><a href="/">Home</a></li>
+                  <!-- <li><a  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">About</a> -->
+                      <div class="dropdown-menu">
+                          {% for category in categories %}
+                          <a class="dropdown-item" href="{{url_for('main.pitches_by_category', category_id = category.id)}}">{{category.category_name}} Pitches</a><br>
+                          {% endfor%}
+                      </div>
+                  </li>
+                  <li><a href="/category/Elevator">Elevator</a></li>
+                  <li><a href="/category/Investor">Investor</a></li>
+                  
+                  
+
+                  {% if current_user.username == "Oluchi"%}
+                  <li><a href="{{url_for('main.add_category')}}"> Add a category</a></li>
+
+                  {%endif%}
+              </ul>
+          </div>
+      </div>
+  </div>
+</div>
